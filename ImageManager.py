@@ -114,55 +114,30 @@ class ImageManager:
                 data[x, y, 1] = g
                 data[x, y, 2] = b
 
-    def powerLaw(self, constant, gramma):
+    def powerLaw(self, constant, gamma):
         global data
-        if (constant == 1):
-            for y in range(height):
-                for x in range(width):
-                    r = data[x, y, 0]
-                    g = data[x, y, 1]
-                    b = data[x, y, 2]
+        for y in range(height):
+            for x in range(width):
+                r = data[x, y, 0] / 255.0
+                g = data[x, y, 1] / 255.0
+                b = data[x, y, 2] / 255.0
 
-                    r = (int)(math.pow(r, gramma))
-                    r = 255 if r > 255 else r
-                    r = 0 if r < 0 else r
+                r = (int)(255 * (constant * (math.pow(r, gamma))))
+                r = 255 if r > 255 else r
+                r = 0 if r < 0 else r
 
-                    g = (int)(math.pow(g, gramma))
-                    g = 255 if g > 255 else g
-                    g = 0 if g < 0 else g
+                g = (int)(255 * (constant * (math.pow(g, gamma))))
+                g = 255 if g > 255 else g
+                g = 0 if g < 0 else g
 
-                    b = (int)(math.pow(b, gramma))
-                    b = 255 if b > 255 else b
-                    b = 0 if b < 0 else b
+                b = (int)(255 * (constant * (math.pow(b, gamma))))
+                b = 255 if b > 255 else b
+                b = 0 if b < 0 else b
 
-                    data[x, y, 0] = r
-                    data[x, y, 1] = g
-                    data[x, y, 2] = b
-            return
-        
-        else:
-            for y in range(height):
-                for x in range(width):
-                    r = data[x, y, 0]
-                    g = data[x, y, 1]
-                    b = data[x, y, 2]
-
-                    r = (int)(constant * math.pow(r, gramma))
-                    r = 255 if r > 255 else r
-                    r = 0 if r < 0 else r
-
-                    g = (int)(constant * math.pow(g, gramma))
-                    g = 255 if g > 255 else g
-                    g = 0 if g < 0 else g
-
-                    b = (int)(constant * math.pow(b, gramma))
-                    b = 255 if b > 255 else b
-                    b = 0 if b < 0 else b
-
-                    data[x, y, 0] = r
-                    data[x, y, 1] = g
-                    data[x, y, 2] = b
-            return
+                data[x, y, 0] = r
+                data[x, y, 1] = g
+                data[x, y, 2] = b
+        return
 
     def getGrayscaleHistogram(self):
         self.convertToGray()
